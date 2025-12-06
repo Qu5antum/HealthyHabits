@@ -2,9 +2,10 @@ from sqlalchemy import select, update, delete
 from fastapi import HTTPException, status
 from backend.src.database.db import AsyncSession
 from backend.src.models.models import User, HealthyHabit
+from backend.src.models.schemas import HealthyHabitCreate, HealthyHabitResponse, UserCreate, UserResponse
 
 # kulanıcı id ye göre yeni habit eklemek 
-async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: str, description: str = None, goal: str = None):
+async def add_new_habit_by_user_id(session: AsyncSession, user_id: UserResponse, title: HealthyHabitCreate, description: HealthyHabitCreate = None, goal: HealthyHabitCreate = None):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
@@ -23,7 +24,7 @@ async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: s
     return new_habit
 
 # kulanıcı id ye göre habit almak
-async def get_habit_by_user_id(session: AsyncSession, user_id: int):
+async def get_habit_by_user_id(session: AsyncSession, user_id: UserResponse):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
@@ -33,7 +34,7 @@ async def get_habit_by_user_id(session: AsyncSession, user_id: int):
     return result.scalars().all()
 
 # kullanıcı id ye göre habit değiştirmek
-async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: str, description: str = None, goal: str = None):
+async def update_habit_by_user_id(session: AsyncSession, user_id: UserResponse, habit_id: HealthyHabitResponse, title: HealthyHabitCreate, description: HealthyHabitCreate = None, goal: HealthyHabitCreate = None):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
@@ -53,7 +54,8 @@ async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id:
     await session.commit()
     return result.scalar_one_or_none()
 
-async def delete_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int):
+# user id ye göre habiti silmek
+async def delete_habit_by_user_id(session: AsyncSession, user_id: UserResponse, habit_id: HealthyHabitResponse):
     query = delete(HealthyHabit).where((HealthyHabit.user_id == user_id) & (HealthyHabit.id == habit_id))
     await session.execute(query)
     await session.commit()

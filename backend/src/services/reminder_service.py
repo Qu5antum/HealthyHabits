@@ -1,17 +1,17 @@
 from sqlalchemy import select
 from fastapi import HTTPException, status
 from backend.src.database.db import AsyncSession
-from backend.src.models.models import HealthyHabit, Reminder
-from backend.src.models.schemas import RemindersCreate
+from backend.src.models.models import HealthyHabit, Reminder, User
+from backend.src.models.schemas import RemindersCreate, RemindersResponce, HealthyHabitResponse, UserResponse
 import datetime
 
 # ПЕРЕПИсАТЬ КОД ДОБАВИТЬ ПОИСК ПО USER_ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # habit id ye göre yeni hatırlayıcı eklemek
-async def add_reminder_by_habit_id(session: AsyncSession, habit_id: int, reminder_name: str = None, reminder_time: str = None):
+async def add_reminder_by_habit_id(session: AsyncSession, user_id: UserResponse, habit_id: HealthyHabitResponse, reminder_name: RemindersCreate, reminder_time: RemindersCreate):
     habit = await session.get(HealthyHabit, habit_id)
-    if not habit:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Habit not founded!")
+    if not habit or habit.user_id != user_id:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Habit not founded for this user!")
     
     hh, mm = map(int, reminder_time.split(":"))  
     
@@ -28,7 +28,7 @@ async def add_reminder_by_habit_id(session: AsyncSession, habit_id: int, reminde
     return new_reminder
 
 # habit id ye göre yeni hatırlayıcı almak
-async def get_reminder_by_habit_id(session: AsyncSession, habit_id: int):
+async def get_reminder_by_habit_id(session: AsyncSession, habit_id: HealthyHabitResponse):
     habit = await session.get(HealthyHabit, habit_id)
     if not habit:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Habit not founded!")

@@ -84,8 +84,9 @@ async def delete_habit(
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Habits not deleted!")
 
-@app.post("/habit/{habit_id}/reminder")
+@app.post("/user/{user_id}/habit/{habit_id}/reminder")
 async def add_reminder(
+    user_id: int,
     habit_id: int,
     reminder: RemindersCreate,
     session: AsyncSession = Depends(get_session)
@@ -93,14 +94,15 @@ async def add_reminder(
     try:
         return await add_reminder_by_habit_id(
             session=session,
+            user_id=user_id,
             habit_id=habit_id,
             reminder_name=reminder.name,
             reminder_time=reminder.time
-        )
+        )               
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Reminder is not added!")
 
-@app.get("/habit/{habit_id}/reminder")
+@app.get("/user/{user_id}/habit/{habit_id}/reminder")
 async def get_reminder(
     habit_id: int,
     session: AsyncSession = Depends(get_session)

@@ -1,8 +1,8 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import List, Optional, Dict
 from datetime import datetime
 
-# ДОБАВИТЬ ОГРАНИЧЕНИЕ В СХЕМАХ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ДОБАВИТЬ ОГРАНИЧЕНИЕ В СХЕМАХ с field validator!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # USER SCHEMAS
 class UserCreate(BaseModel):
@@ -21,7 +21,7 @@ class UserResponse(BaseModel):
 # HEALTHY HABIT SCHEMAS
 class HealthyHabitCreate(BaseModel):
     title: str
-    description: str
+    description: str | None = None
     goal: Optional[str] = Field(None, description="Sizin değer hedef")
 
 class HealthyHabitResponse(BaseModel):
@@ -36,7 +36,7 @@ class HealthyHabitResponse(BaseModel):
 # REMINDERS SCHEMAS
 class RemindersCreate(BaseModel):
     name: str | None = None
-    time: str | None = None
+    time: str | None = None 
 
 class RemindersResponce(BaseModel):
     id: int
