@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, func, JSON
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, func, JSON, Time
 from sqlalchemy.orm import relationship
 from backend.src.database.db import Base
 
@@ -6,7 +6,7 @@ from backend.src.database.db import Base
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True) #по возмозности добавить uuid
     username = Column(String, unique=True)
     usergmail = Column(String, unique=True)
     password = Column(String)
@@ -16,16 +16,26 @@ class User(Base):
 
 #HealthyHabit modelin oluşumu
 class HealthyHabit(Base):
-    __tablename__ = "healtyhabits"
+    __tablename__ = "healthyhabits"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    description = Column(String)
-    goal = Column(String)
-    reminders = Column(JSON)
-
+    description = Column(String, nullable=True)
+    goal = Column(String, nullable=True)
+    
+    reminder = relationship("Reminder", back_populates="habit", cascade="all, delete-orphan")
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="healthyhabit")
+
+class Reminder(Base):
+    __tablename__ = "reminders"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    time = Column(Time)
+
+    habit_id = Column(Integer, ForeignKey("healthyhabits.id"))
+    habit = relationship("HealthyHabit", back_populates="reminder")
 
 #ChatBot modelin oluşumu
 class ChatBot(Base):

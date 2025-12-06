@@ -1,15 +1,14 @@
-from pydantic import BaseModel, EmailStr
-from typing import List, Optional
+from pydantic import BaseModel, EmailStr, Field
+from typing import List, Optional, Dict
 from datetime import datetime
 
-
+# ДОБАВИТЬ ОГРАНИЧЕНИЕ В СХЕМАХ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # USER SCHEMAS
 class UserCreate(BaseModel):
     username: str
     usergmail: EmailStr
-    password: str
-
+    password: str = Field(min_length=7, max_length=15, description="Şifre uzunluğu 7 ile 15 karakter arasında olmalıdır!")
 
 class UserResponse(BaseModel):
     id: int
@@ -19,33 +18,35 @@ class UserResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
-
 # HEALTHY HABIT SCHEMAS
 class HealthyHabitCreate(BaseModel):
     title: str
     description: str
-    goal: str
-    reminders: List[str] = []   # JSON list
-
+    goal: Optional[str] = Field(None, description="Sizin değer hedef")
 
 class HealthyHabitResponse(BaseModel):
     id: int
     title: str
     description: str
     goal: str
-    reminders: List[str]
 
     class Config:
         from_attributes = True
 
+# REMINDERS SCHEMAS
+class RemindersCreate(BaseModel):
+    name: str | None = None
+    time: str | None = None
 
+class RemindersResponce(BaseModel):
+    id: int
+    name: str
+    time: str
 
 # CHATBOT MESSAGE SCHEMAS
 class ChatBotMessageCreate(BaseModel):
     user_message: str
     bot_answer: Optional[str] = None
-
 
 class ChatBotMessageResponse(BaseModel):
     id: int
@@ -55,8 +56,6 @@ class ChatBotMessageResponse(BaseModel):
 
     class Config:
         from_attributes = True
-
-
 
 # USER WITH RELATIONS
 class UserFullResponse(BaseModel):

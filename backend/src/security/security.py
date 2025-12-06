@@ -5,7 +5,6 @@ from sqlalchemy import select
 from backend.src.config.config import config
 from backend.src.database.db import get_session, AsyncSession
 import jwt, datetime
-from typing import Dict
 from backend.src.security.security_context import *
 from backend.src.models.schemas import UserCreate
 from backend.src.models.models import User
