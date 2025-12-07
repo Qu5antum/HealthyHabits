@@ -9,7 +9,7 @@ from backend.src.security.security_context import *
 from backend.src.models.schemas import UserCreate
 from backend.src.models.models import User
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/user/login/")
 
 async def create_jwt_token(data):
     to_encode = data.copy()

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from environs import Env
 
 @dataclass
@@ -7,6 +7,10 @@ class Config:
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: str
     URL_DATABASE: str
+    app_name: str = "HealthyHabit"
+    debug: bool = True
+    cors_origins: list = field(default_factory=lambda: ["*"])
+
 
 def load_config(path: str = None) -> Config:
     env = Env()

@@ -5,7 +5,7 @@ from backend.src.models.models import User, HealthyHabit
 from backend.src.models.schemas import HealthyHabitCreate, HealthyHabitResponse, UserCreate, UserResponse
 
 # kulanıcı id ye göre yeni habit eklemek 
-async def add_new_habit_by_user_id(session: AsyncSession, user_id: UserResponse, title: HealthyHabitCreate, description: HealthyHabitCreate = None, goal: HealthyHabitCreate = None):
+async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: str, description: str = None, goal: str = None):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
@@ -24,7 +24,7 @@ async def add_new_habit_by_user_id(session: AsyncSession, user_id: UserResponse,
     return new_habit
 
 # kulanıcı id ye göre habit almak
-async def get_habit_by_user_id(session: AsyncSession, user_id: UserResponse):
+async def get_habit_by_user_id(session: AsyncSession, user_id: int):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
@@ -34,7 +34,7 @@ async def get_habit_by_user_id(session: AsyncSession, user_id: UserResponse):
     return result.scalars().all()
 
 # kullanıcı id ye göre habit değiştirmek
-async def update_habit_by_user_id(session: AsyncSession, user_id: UserResponse, habit_id: HealthyHabitResponse, title: HealthyHabitCreate, description: HealthyHabitCreate = None, goal: HealthyHabitCreate = None):
+async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: HealthyHabitCreate, description: str = None, goal: str = None):
     user = await session.get(User, user_id)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
@@ -45,7 +45,7 @@ async def update_habit_by_user_id(session: AsyncSession, user_id: UserResponse, 
     
     query = (
         update(HealthyHabit)
-        .where((HealthyHabit.user_id == user_id) & (HealthyHabit.id == habit_id))
+        .where((HealthyHabit.id == habit_id) & (HealthyHabit.user_id == user_id))
         .values(title=title, description=description, goal=goal)
         .returning(HealthyHabit)
     )
@@ -55,7 +55,7 @@ async def update_habit_by_user_id(session: AsyncSession, user_id: UserResponse, 
     return result.scalar_one_or_none()
 
 # user id ye göre habiti silmek
-async def delete_habit_by_user_id(session: AsyncSession, user_id: UserResponse, habit_id: HealthyHabitResponse):
-    query = delete(HealthyHabit).where((HealthyHabit.user_id == user_id) & (HealthyHabit.id == habit_id))
+async def delete_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int):
+    query = delete(HealthyHabit).where((HealthyHabit.id == habit_id) & (HealthyHabit.user_id == user_id))
     await session.execute(query)
     await session.commit()
