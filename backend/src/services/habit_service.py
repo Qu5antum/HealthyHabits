@@ -8,7 +8,7 @@ from backend.src.models.schemas import HealthyHabitCreate, HealthyHabitResponse,
 async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: str, description: str = None, goal: str = None):
     user = await session.get(User, user_id)
     if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!") # возможно надо убрать
     
     new_habit = HealthyHabit(
         user_id=user_id,
@@ -34,14 +34,13 @@ async def get_habit_by_user_id(session: AsyncSession, user_id: int):
     return result.scalars().all()
 
 # kullanıcı id ye göre habit değiştirmek
-async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: HealthyHabitCreate, description: str = None, goal: str = None):
-    user = await session.get(User, user_id)
-    if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
-    
+async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: str = None, description: str = None, goal: str = None):
     habit = await session.get(HealthyHabit, habit_id)
     if not habit:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Habit not founded!")
+    
+    if habit.user_id != user_id:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Habit not founded!")
     
     query = (
         update(HealthyHabit)
@@ -56,6 +55,13 @@ async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id:
 
 # user id ye göre habiti silmek
 async def delete_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int):
+    habit = await session.get(HealthyHabit, habit_id)
+    if not habit:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Habit not founded!")
+    
+    if habit.user_id != user_id:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Habit not founded!")
+    
     query = delete(HealthyHabit).where((HealthyHabit.id == habit_id) & (HealthyHabit.user_id == user_id))
     await session.execute(query)
     await session.commit()

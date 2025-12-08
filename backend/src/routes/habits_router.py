@@ -4,7 +4,6 @@ from backend.src.services.habit_service import *
 from backend.src.models.schemas import *
 from backend.src.database.db import get_session
 from backend.src.dependencies.dependencies import get_current_user
-from backend.src.config.config import config
 
 router = APIRouter(
     prefix="/habit",
@@ -14,12 +13,12 @@ router = APIRouter(
 @router.post("", status_code=status.HTTP_200_OK)
 async def add_habits(
     habit: HealthyHabitCreate,
-    current_user: User = Depends(get_current_user),
+    user: User = Depends(get_current_user),
     session: AsyncSession = Depends(get_session)
 ):
     return await add_new_habit_by_user_id(
         session=session,
-        user_id=current_user.id,
+        user_id=user.id,
         title=habit.title,
         description=habit.description,
         goal=habit.goal
