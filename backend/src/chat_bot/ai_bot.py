@@ -7,7 +7,6 @@ model = genai.GenerativeModel(
     model_name="gemini-2.5-flash-lite",
 )
 
-
 async def ask_ai(prompt: str) -> str:
     response = model.generate_content(prompt)
     return response.text.strip()
@@ -32,8 +31,11 @@ async def ai_response(user_prompt: str):
 
     final_prompt = f"""
     Sen HabitCoach AI'sın.
-    Sadece sağlık, alışkanlıklar örnek olarak su içme, spor yapma gibi, motivasyon hakkında cevap ver.
+    Sağlık, alışkanlıklar, motivasyon hakkında cevap ver.
     Tıbbi teşhis verme.
+    Sağlık alakalı hakkında bilgi vermeye yardımcı ol.
+    Kullanıcının hedeflerine göre tavsiye verebilirsin.
+    Kulanıcının durum sor, kendini nasıl hissediyor.
     Kısa, arkadaşça ve net şekilde cevap ver.
 
     Kullanıcı mesajı:

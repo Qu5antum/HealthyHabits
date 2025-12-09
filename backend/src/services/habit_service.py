@@ -33,7 +33,7 @@ async def get_habit_by_user_id(session: AsyncSession, user_id: int):
     return result.scalars().all()
 
 # kullanıcı id ye göre habit değiştirmek
-async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: str = None, description: str = None, goal: str = None):
+async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: str, description: str, goal: str):
     habit = await session.get(HealthyHabit, habit_id)
     if not habit:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Habit not founded!")
