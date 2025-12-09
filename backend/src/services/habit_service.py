@@ -2,7 +2,6 @@ from sqlalchemy import select, update, delete
 from fastapi import HTTPException, status
 from backend.src.database.db import AsyncSession
 from backend.src.models.models import User, HealthyHabit
-from backend.src.models.schemas import HealthyHabitCreate, HealthyHabitResponse, UserCreate, UserResponse
 
 # kulanıcı id ye göre yeni habit eklemek 
 async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: str, description: str = None, goal: str = None):
