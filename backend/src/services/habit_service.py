@@ -5,10 +5,6 @@ from backend.src.models.models import User, HealthyHabit
 
 # kulanıcı id ye göre yeni habit eklemek 
 async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: str, description: str = None, goal: str = None):
-    user = await session.get(User, user_id)
-    if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!") # возможно надо убрать
-    
     new_habit = HealthyHabit(
         user_id=user_id,
         title=title,
@@ -24,13 +20,14 @@ async def add_new_habit_by_user_id(session: AsyncSession, user_id: int, title: s
 
 # kulanıcı id ye göre habit almak
 async def get_habit_by_user_id(session: AsyncSession, user_id: int):
-    user = await session.get(User, user_id)
-    if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not founded!")
-    
     query = select(HealthyHabit).where(HealthyHabit.user_id == user_id)
     result = await session.execute(query)
-    return result.scalars().all()
+    user_habits =  result.scalars().all()
+
+    if not user_habits: 
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "No founded habits!")
+    
+    return user_habits
 
 # kullanıcı id ye göre habit değiştirmek
 async def update_habit_by_user_id(session: AsyncSession, user_id: int, habit_id: int, title: str, description: str, goal: str):

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, func, JSON, Time
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, func, JSON, Time, Float
 from sqlalchemy.orm import relationship
 from backend.src.database.db import Base
 
@@ -13,6 +13,7 @@ class User(Base):
 
     healthyhabit = relationship("HealthyHabit", back_populates="user", cascade="all, delete-orphan")
     chatbot = relationship("ChatBot", back_populates="user", cascade="all, delete-orphan")
+    heart_risk = relationship("HeartRisk", back_populates="user", cascade="all, delete-orphan")
 
 #HealthyHabit modelin oluşumu
 class HealthyHabit(Base):
@@ -48,4 +49,37 @@ class ChatBot(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="chatbot")
+
+class HeartRisk(Base):
+    __tablename__ = "riskinputs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    age = Column(Integer)                        
+    sex = Column(String)                         
+    smoke = Column(String)                       
+    alcohol = Column(String)                     
+
+    height = Column(Integer)                     
+    weight = Column(Integer)                   
+
+    stroke = Column(String)                     
+
+    physical_health = Column(Integer)            
+    mental_health = Column(Integer)           
+
+    difficulty_walking = Column(String)        
+
+    physical_activity = Column(String)           
+    general_health = Column(String)             
+
+    sleep = Column(Integer)                      
+
+    high_sugar_level = Column(String)           
+    asthma = Column(String)                      
+    kidney_problems = Column(String)             
+    skin_diseases = Column(String)              
+
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="heart_risk")
+
 

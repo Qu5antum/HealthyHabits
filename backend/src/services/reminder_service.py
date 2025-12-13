@@ -13,8 +13,7 @@ async def add_reminder_by_habit_id(session: AsyncSession, user_id: int, habit_id
     if habit.user_id != user_id:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Habit not founded!")
 
-    # ДОЛЖНО ВЫХИДИТЬ ОШИБКА ЕСЛИ ПОЛЬЗОВАТЕЛЬ ВВЕЛ НЕ ПОДХОДЯЩИЕ ЗНАЧЕНИЕ 
-    hh, mm = map(int, reminder_time.split(":"))  
+    hh, mm = map(int, str(reminder_time).split(":")) 
     
     new_reminder = Reminder(
         habit_id = habit.id,
@@ -39,7 +38,12 @@ async def get_reminder_by_habit_id(session: AsyncSession, user_id: int, habit_id
     
     query = select(Reminder).where((HealthyHabit.id == habit_id) & (Reminder.habit_id == habit_id))
     result = await session.execute(query)
-    return result.scalars().all()
+    user_reminders = result.scalars().all()
+
+    if not user_reminders:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Reminders not founded!")
+    
+    return user_reminders
 
 # habit id göre hatırlayıcıyı güncellemek
 async def update_reminder_by_habit_id(session: AsyncSession, user_id: int, habit_id: int, reminder_id: int, reminder_name: str = None, reminder_time: str = None):

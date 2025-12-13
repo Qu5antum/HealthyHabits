@@ -6,3 +6,6 @@ passlib
 pyjwt
 environs
 bcrypt
+joblib
+pandas
+

@@ -6,6 +6,7 @@ from backend.src.routes.habits_router import router as habit_router
 from backend.src.routes.user_router import router as user_router
 from backend.src.routes.reminder_router import router as reminder_router
 from backend.src.routes.ai_bot_router import router as ai_router
+from backend.src.routes.heart_risk_router import router as risk_form_router
 import asyncio
 import uvicorn
 
@@ -27,6 +28,7 @@ app.include_router(user_router)
 app.include_router(habit_router)
 app.include_router(reminder_router)
 app.include_router(ai_router)
+app.include_router(risk_form_router)
 
 
 if __name__ == "__main__":
