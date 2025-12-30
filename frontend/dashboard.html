@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Heart Risk Form</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container-dash">
+    <h1>Kalp Hastalığı Risk Formu</h1>
+
+    <form id="riskForm">
+
+        <label>Yaş</label>
+        <input type="number" name="age" required>
+
+        <label>Cinsiyet</label>
+        <select name="sex">
+            <option value="Male">Erkek</option>
+            <option value="Female">Kadın</option>
+        </select>
+
+        <label>Kilo (kg)</label>
+        <input type="number" name="weight" step="0.1" required>
+
+        <label>Boy (cm)</label>
+        <input type="number" name="height" required>
+
+        <label>Sigara içme</label>
+        <select name="smoke">
+            <option value="Yes">Evet</option>
+            <option value="No">Hayır</option>
+        </select>
+
+        <label>Alkol içme</label>
+        <select name="alcohol">
+            <option value="Yes">Evet</option>
+            <option value="No">Hayır</option>
+        </select>
+
+        <label>Daha önce inme geçirdiniz mi</label>
+        <select name="stroke">
+            <option value="No">Hayır</option>
+            <option value="Yes">Evet</option>
+        </select>
+
+        <label>Son 30 günde fiziksel sağlık problemleri yaşanan gün sayısı (0–30)</label>
+        <input type="number" name="physical_health" min="0" max="30">
+
+        <label>Son 30 günde mental sağlık problemleri yaşanan gün sayısı (0–30)</label>
+        <input type="number" name="mental_health" min="0" max="30">
+
+        <label>Yürüyüş zorluğu var mı?</label>
+        <select name="difficulty_walking">
+            <option value="No">Hayır</option>
+            <option value="Yes">Evet</option>
+        </select>
+
+        <label>Fiziksel aktivite düzeyi</label>
+        <select name="physical_activity">
+            <option value="Yes">Evet</option>
+            <option value="No">Hayır</option>
+        </select>
+
+        <label>Genel sağlık durumu</label>
+        <select name="general_health">
+            <option value="poor">Poor</option>
+            <option value="fair">Fair</option>
+            <option value="good">Good</option>
+            <option value="very good">Very Good</option>
+            <option value="excellent">Excellent</option>
+        </select>
+
+        <label>Uyku (saat)</label>
+        <input type="number" name="sleep" step="0.1">
+
+        <label>Hiç yüksek şeker seviyeniz oldu mu?</label>
+        <select name="high_sugar_level">
+            <option value="No">Hayır</option>
+            <option value="Yes">Evet</option>
+        </select>
+
+        <label>Astımınız var mı?</label>
+        <select name="asthma">
+            <option value="No">Hayır</option>
+            <option value="Yes">Evet</option>
+        </select>
+
+        <label>Böbrek sorunlarınız var mı</label>
+        <select name="kidney_problems">
+            <option value="No">Hayır</option>
+            <option value="Yes">Evet</option>
+        </select>
+
+        <label>Cilt hastalıklarınız var mı</label>
+        <select name="skin_diseases">
+            <option value="No">Hayır</option>
+            <option value="Yes">Evet</option>
+        </select>
+
+        <button type="submit">Riski Hesapla</button>
+    </form>
+
+    <pre id="result"></pre>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

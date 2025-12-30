@@ -1,0 +1,192 @@
+/* Подключаем современный шрифт */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Светло-серый фон с медицинским оттенком */
+    background-color: #f0f4f8;
+    color: #2d3748;
+    padding: 20px;
+}
+
+/* Основной контейнер */
+.container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 550px;
+    padding: 40px;
+    border-radius: 24px;
+    /* Мягкая "глубокая" тень для эффекта чистоты */
+    box-shadow: 0 10px 25px rgba(148, 163, 184, 0.15);
+    border: 1px solid #e2e8f0;
+}
+.container_result {
+    background: #ffffff;
+    width: 95%;           /* Занимает почти всю ширину экрана на мобильных */
+    max-width: 1100px;
+    padding: 40px;
+    border-radius: 24px;
+    /* Мягкая "глубокая" тень для эффекта чистоты */
+    box-shadow: 0 10px 25px rgba(148, 163, 184, 0.15);
+    border: 1px solid #e2e8f0;
+}
+.container_dash {
+    background: #ffffff;
+    width: 100%;
+    max-width: 550px;
+    padding: 40px;
+    border-radius: 24px;
+    /* Мягкая "глубокая" тень для эффекта чистоты */
+    box-shadow: 0 10px 25px rgba(148, 163, 184, 0.15);
+    border: 1px solid #e2e8f0;
+}
+
+h1, h2 {
+    color: #1a365d;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Стилизация формы с рисками (сетка) */
+#riskForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 5px;
+    grid-column: span 1;
+}
+
+/* Поля ввода и выпадающие списки */
+input, select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: #f8fafc;
+    color: #1a365d;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Кнопки */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #3b82f6; /* Медицинский синий */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    grid-column: span 2; /* Кнопка на всю ширину */
+}
+
+button:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Стили для страницы авторизации (когда кнопки друг под другом) */
+.container hr {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Результаты анализа */
+#result {
+    grid-column: span 2;
+    background-color: #f1f5f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #334155;
+    white-space: pre-wrap;
+}
+
+/* Сообщения об ошибках или успехе */
+#message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #e11d48;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 500px) {
+    #riskForm {
+        grid-template-columns: 1fr;
+    }
+    label, button, input, select {
+        grid-column: span 1;
+    }
+    .container {
+        padding: 25px;
+    }
+}
+
+.result-card {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.diff-list {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+}
+
+.diff-list li {
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+}
+
+.diff-list li::before {
+    content: "•";
+    color: #3b82f6;
+    font-weight: bold;
+    margin-right: 10px;
+}

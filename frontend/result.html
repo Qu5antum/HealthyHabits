@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Risk Sonucu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container_result">
+    <h2>Risk Analizi</h2>
+
+    <div id="result"></div>
+
+    <canvas id="riskChart" height="120"></canvas>
+    <canvas id="strokeChart" style="max-height: 400px;"></canvas>
+    <canvas id="diffChart" height="160"></canvas>
+
+    <button onclick="logout()">Çıkış</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="script.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        loadResults();
+    });
+</script>
+
+</body>
+</html>

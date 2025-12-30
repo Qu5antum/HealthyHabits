@@ -1,31 +1,35 @@
-from backend.src.models.schemas import HeartRiskInput
-import joblib
-import pandas as pd
 from typing import Dict
-
-model = joblib.load("heart_model.pkl")
-
+from backend.src.models.schemas import HeartRiskInput
 
 async def convert_form_to_features(form: HeartRiskInput) -> Dict:
     # BMI
     bmi = round(form.weight / ((form.height / 100) ** 2), 2)
 
-    age = form.age  
-    if age < 30:
-        age_cat = "18-29"
+    age = form.age
+
+    if age < 25:
+        age_cat = "18-24"
+    elif age < 30:
+        age_cat = "25-29"
+    elif age < 35:
+        age_cat = "30-34"
+    elif age < 40:
+        age_cat = "35-39"
     elif age < 45:
-        age_cat = "30-44"
-    elif age < 60:
-        age_cat = "45-54"
+        age_cat = "40-44"
+    elif age < 50:
+        age_cat = "45-49"
+    elif age < 55:
+        age_cat = "50-54"
     elif age < 60:
         age_cat = "55-59"
     elif age < 65:
         age_cat = "60-64"
-    elif age < 65:
-        age_cat = "65-69"
     elif age < 70:
-        age_cat = "70-74"
+        age_cat = "65-69"
     elif age < 75:
+        age_cat = "70-74"
+    elif age < 80:
         age_cat = "75-79"
     else:
         age_cat = "80 or older"
@@ -51,16 +55,3 @@ async def convert_form_to_features(form: HeartRiskInput) -> Dict:
         "KidneyDisease": form.kidney_problems,    
         "SkinCancer": form.skin_diseases          
     }
-
-
-async def predict_risk(features: dict):
-    feature_order = [
-        'BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
-        'MentalHealth', 'DiffWalking', 'Sex', 'AgeCategory', 'Diabetic',
-        'PhysicalActivity', 'GenHealth', 'SleepTime', 'Asthma', 'KidneyDisease', 'SkinCancer'
-    ]
-
-    X = pd.DataFrame([{col: features[col] for col in feature_order}])
-
-    prob = model.predict_proba(X)[0][1] 
-    return round(prob * 100, 2)

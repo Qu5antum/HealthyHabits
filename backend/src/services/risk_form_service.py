@@ -9,14 +9,6 @@ async def add_risk_form_by_user(
         user_id: int,
         form: HeartRiskInput
 ): 
-    
-    existing_query = select(HeartRisk).where(HeartRisk.user_id == user_id)
-    result = await session.execute(existing_query)
-    existing = result.scalars().first()
-
-    if not existing: 
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Form is not founded!")
-    
     new_form = HeartRisk(
         user_id = user_id,
         **form.model_dump()
@@ -52,8 +44,13 @@ async def update_form_by_user(
     )
 
     result = await session.execute(query)
-    session.commit()
-    return result.scalars().first()
+    await session.commit()
+    form = result.scalars().first()
+
+    if not form: 
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Form is not founded!")
+    
+    return form
     
     
      

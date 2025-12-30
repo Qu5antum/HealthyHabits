@@ -7,9 +7,10 @@ import string
 class UserCreate(BaseModel):
     username: str 
     usergmail: EmailStr
-    password: str = Field(min_length=7, max_length=15, description="Şifre uzunluğu 7 ile 15 karakter arasında olmalıdır!")
+    password: str
+    """Field(min_length=7, max_length=15, description="Şifre uzunluğu 7 ile 15 karakter arasında olmalıdır!")"""
     
-    @field_validator("password")
+    """@field_validator("password")
     def strong_password(cls, password):
         digits = string.digits
         lower_case = string.ascii_lowercase
@@ -25,7 +26,7 @@ class UserCreate(BaseModel):
         if not any(i in punctuations for i in password):
              raise ValueError("Şifrenizde en az bir özel karakter bulunmalıdır!")
         
-        return password
+        return password"""
     
 class UserResponse(BaseModel):
     id: int
@@ -97,30 +98,30 @@ class UserFullResponse(BaseModel):
 from pydantic import BaseModel, Field
 
 class HeartRiskInput(BaseModel):
-    age: int = "Yaş (örn. 20)"
-    sex: str = "Cinsiyet: Male / Female"
-    smoke: str = "Sigara içme: Yes / No"
+    age: int 
+    sex: str 
+    smoke: str 
     
-    weight: int = "Kilonuz (kg)"
-    height: int = "Boyunuz (cm)"
+    weight: int 
+    height: int
 
-    alcohol: str = "Alkol tüketimi: Yes / No"
-    stroke: str = "Daha önce inme geçirdiniz mi?: Yes / No"
+    alcohol: str
+    stroke: str 
 
-    physical_health: int = "Son 30 günde fiziksel sağlık problemleri yaşanan gün sayısı (0–30)"
-    mental_health: int = "Son 30 günde mental sağlık problemleri yaşanan gün sayısı (0–30)"
+    physical_health: int 
+    mental_health: int 
 
-    difficulty_walking: str = "Yürüyüş zorluğu var mı?: Yes / No"
-    physical_activity: str = "Fiziksel aktivite düzeyi: Yes/No"
+    difficulty_walking: str 
+    physical_activity: str 
 
-    general_health: str = "Genel sağlık durumu: poor / fair / good / very good / excellent"
+    general_health: str
 
-    sleep: int = "Günde kaç saat uyuyorsunuz? (örn. 7)"
+    sleep: int 
     
-    high_sugar_level: str = "Hiç yüksek şeker seviyeniz oldu mu?: Yes / No (Diabetic)"
-    asthma: str = "Astımınız var mı?: Yes / No"
-    kidney_problems: str = "Böbrek sorunlarınız var mı?: Yes / No"
-    skin_diseases: str = "Cilt hastalıklarınız var mı?: Yes / No"
+    high_sugar_level: str 
+    asthma: str 
+    kidney_problems: str 
+    skin_diseases: str 
 
 
 

@@ -6,7 +6,7 @@ from backend.src.database.db import get_session
 from backend.src.dependencies.dependencies import get_current_user
 
 router = APIRouter(
-    prefix="/aibot",
+    prefix="/ai_bot",
     tags=["aibot"]
 )
 
