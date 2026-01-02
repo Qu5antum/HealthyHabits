@@ -9,4 +9,5 @@ The app can analyze(predict user's heart desease risk) the user's risk of heart 
 3. Gemini AI API
 4. Pytorch
 5. XGBoost and Random Forest for train model(Heart Desease Predict Risk)
-6. Javascript(Frontend)
+6. JWT for Authorization
+7. Javascript(Frontend)
