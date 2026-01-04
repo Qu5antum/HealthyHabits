@@ -1,7 +1,7 @@
 # Healthy Habits App
 
 # Description
-The app can analyze(predict user's heart desease risk) the user's risk of heart disease based on their lifestyle and habits. It also features an AI assistant that can recommend healthy habits, and the user can track their habits and their implementation.
+This project is a heart disease risk prediction system based on the user's health and lifestyle data. The system calculates individual risk and compares it to the average probability of people of the same age and gender. Additionally, it analyzes how the user differs from the low-risk group, identifying key factors that increase the likelihood of developing the disease. The results are accompanied by a visual interpretation and textual explanation.
 
 # Technologies
 1. Fastapi
